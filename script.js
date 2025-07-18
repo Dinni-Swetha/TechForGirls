@@ -69,6 +69,9 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(data)
     });
 
+    const result = await res.json();
+    console.log("SheetDB response:", result);
+
     if (!res.ok) throw new Error("Network response was not ok");
 
     message.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
@@ -78,11 +81,11 @@ form.addEventListener("submit", async (e) => {
     disableForm();
   } catch (err) {
     alert("Submission failed. Try again.");
-    console.error(err);
+    console.error("Error submitting to SheetDB:", err);
   }
 });
 
 function disableForm() {
   const inputs = form.querySelectorAll("input, button");
-  inputs.forEach((input) => input.disabled = true);
+  inputs.forEach((input) => (input.disabled = true));
 }
