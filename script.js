@@ -6,6 +6,7 @@ const submitBtn = document.getElementById("submitBtn");
 const message = document.getElementById("message");
 const form = document.getElementById("registrationForm");
 
+// Check if already submitted
 const submittedFlag = localStorage.getItem("submitted");
 if (submittedFlag === "true") {
   disableForm();
@@ -32,29 +33,42 @@ shareBtn.addEventListener("click", () => {
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  if (clickCount < maxClicks) return;
 
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const email = document.getElementById("email").value;
-  const college = document.getElementById("college").value;
-  const file = document.getElementById("screenshot").files[0];
+  if (clickCount < maxClicks) {
+    alert("Please complete sharing before submitting.");
+    return;
+  }
 
-  // STEP 1: Upload file to Google Drive (via Apps Script Web App)
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("phone", phone);
-  formData.append("email", email);
-  formData.append("college", college);
-  formData.append("file", file);
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const college = document.getElementById("college").value.trim();
+
+  if (!name || !phone || !email || !college) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  const data = {
+    data: {
+      name,
+      phone,
+      email,
+      college
+    }
+  };
 
   try {
-    const apiUrl = "https://sheetdb.io/api/v1/3ajbxpbp6mlnr";{
+    const res = await fetch("https://sheetdb.io/api/v1/3ajbxpbp6mlnr", {
       method: "POST",
-      body: formData
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
     });
 
-    const result = await res.text();
+    if (!res.ok) throw new Error("Network response was not ok");
+
     message.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
     message.classList.remove("hidden");
 
