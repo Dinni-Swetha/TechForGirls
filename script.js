@@ -6,13 +6,7 @@ const submitBtn = document.getElementById("submitBtn");
 const message = document.getElementById("message");
 const form = document.getElementById("registrationForm");
 
-// Check if already submitted
-const submittedFlag = localStorage.getItem("submitted");
-if (submittedFlag === "true") {
-  disableForm();
-  message.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
-  message.classList.remove("hidden");
-}
+// Removed the localStorage check to allow multiple submissions
 
 shareBtn.addEventListener("click", () => {
   if (clickCount >= maxClicks) return;
@@ -69,23 +63,21 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(data)
     });
 
-    const result = await res.json();
-    console.log("SheetDB response:", result);
-
     if (!res.ok) throw new Error("Network response was not ok");
 
     message.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
     message.classList.remove("hidden");
 
-    localStorage.setItem("submitted", "true");
-    disableForm();
+    // Reset form and buttons for next registration
+    form.reset();
+    clickCount = 0;
+    clickCounter.innerText = `Click count: 0/${maxClicks}`;
+    shareBtn.disabled = false;
+    submitBtn.disabled = true;
   } catch (err) {
     alert("Submission failed. Try again.");
-    console.error("Error submitting to SheetDB:", err);
+    console.error(err);
   }
 });
 
-function disableForm() {
-  const inputs = form.querySelectorAll("input, button");
-  inputs.forEach((input) => (input.disabled = true));
-}
+// Removed disableForm function calls — form remains enabled for multiple submissions
