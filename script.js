@@ -49,7 +49,7 @@ form.addEventListener("submit", async (e) => {
   formData.append("file", file);
 
   try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbw2BE6M3Y0AtjmP84aRRTBg1cvcrPgJ6Lf3tIDI_Bk4KHaUnZ6gc0XYWjTvT8VDnCgU/exec", {
+    const apiUrl = "https://sheetdb.io/api/v1/3ajbxpbp6mlnr";{
       method: "POST",
       body: formData
     });
