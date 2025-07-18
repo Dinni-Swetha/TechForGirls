@@ -55,7 +55,7 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    const res = await fetch("https://sheetdb.io/api/v1/3ajbxpbp6mlnr", {
+    const res = await fetch("https://sheetdb.io/api/v1/wwd1zvfrlzlte", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
