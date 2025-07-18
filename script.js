@@ -52,10 +52,10 @@ form.addEventListener("submit", async (e) => {
   const data = {
     data: [
       {
-        name,
-        phone,
-        email,
-        college
+        "Full name": name,
+        "phone no": phone,
+        "Email ID": email,
+        "College": college
       }
     ]
   };
