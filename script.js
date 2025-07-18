@@ -6,7 +6,7 @@ const submitBtn = document.getElementById("submitBtn");
 const message = document.getElementById("message");
 const form = document.getElementById("registrationForm");
 
-// Removed the localStorage check to allow multiple submissions
+// Removed localStorage to allow multiple submissions
 
 shareBtn.addEventListener("click", () => {
   if (clickCount >= maxClicks) return;
@@ -46,10 +46,10 @@ form.addEventListener("submit", async (e) => {
   const data = {
     data: [
       {
-        "Full name": name,
+        name,                    // matches your spreadsheet
         "phone no": phone,
         "Email ID": email,
-        "College": college
+        College: college
       }
     ]
   };
@@ -79,5 +79,3 @@ form.addEventListener("submit", async (e) => {
     console.error(err);
   }
 });
-
-// Removed disableForm function calls — form remains enabled for multiple submissions
