@@ -6,8 +6,6 @@ const submitBtn = document.getElementById("submitBtn");
 const message = document.getElementById("message");
 const form = document.getElementById("registrationForm");
 
-// Removed localStorage to allow multiple submissions
-
 shareBtn.addEventListener("click", () => {
   if (clickCount >= maxClicks) return;
 
@@ -37,19 +35,23 @@ form.addEventListener("submit", async (e) => {
   const phone = document.getElementById("phone").value.trim();
   const email = document.getElementById("email").value.trim();
   const college = document.getElementById("college").value.trim();
+  const fileInput = document.getElementById("file");
+  const file = fileInput.files[0];
+  const fileName = file ? file.name : "No file selected";
 
-  if (!name || !phone || !email || !college) {
-    alert("Please fill in all fields.");
+  if (!name || !phone || !email || !college || !file) {
+    alert("Please fill in all fields and upload a file.");
     return;
   }
 
   const data = {
     data: [
       {
-        name,                    // matches your spreadsheet
+        name,
         "phone no": phone,
         "Email ID": email,
-        College: college
+        College: college,
+        "File name": fileName
       }
     ]
   };
@@ -68,7 +70,7 @@ form.addEventListener("submit", async (e) => {
     message.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
     message.classList.remove("hidden");
 
-    // Reset form and buttons for next registration
+    // Reset for next entry
     form.reset();
     clickCount = 0;
     clickCounter.innerText = `Click count: 0/${maxClicks}`;
